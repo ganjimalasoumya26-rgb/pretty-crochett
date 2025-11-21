@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Details</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+
+<body style="background:#f4f4f4;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+        <a class="navbar-brand" href="#">Earbuds Store</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg p-4">
+                    <h3 class="text-center mb-4">Payment Details</h3>
+
+                    <form id="paymentForm">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Mobile Number</label>
+                            <input type="number" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Address</label>
+                            <textarea class="form-control" rows="3" required></textarea>
+                        </div>
+
+                        <button type="button" class="btn btn-primary w-100" id="payBtn">
+                            Proceed to Buy
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Razorpay Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        document.getElementById("payBtn").onclick = function () {
+            var options = {
+                "key": "YOUR_RAZORPAY_KEY_ID",  // replace this
+                "amount": 99900,               // amount in paise (₹999 = 99900)
+                "currency": "INR",
+                "name": "Earbuds Store",
+                "description": "Payment for Earbuds",
+                "handler": function (response) {
+                    alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                },
+                "prefill": {
+                    "name": "",
+                    "email": "",
+                    "contact": ""
+                },
+                "theme": {
+                    "color": "#0d6efd"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        };
+    </script>
+</body>
+</html>
